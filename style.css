@@ -1,3 +1,87 @@
-div{
-    border: 2px solid grey;
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    align-items: center;
+}
+
+.block{
+    border: 2px solid rgb(245, 240, 240);
+}
+
+#aside{
+    border: 2px solid red;
+    padding: 40px 18px;
+}
+
+#tile-container{
+    padding: 10px 10px 0 0;
+    width:65vw;
+    height: 95vh
+}
+.btn:hover{
+    border: 2px solid rgb(133, 175, 239);
+}
+.btn{
+    border: 2px solid rgb(14, 41, 152);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 10px 1.5rem;
+    border-radius: 8px;
+    color: black;
+    background-color: white;
+    font-weight: bold;
+}
+#btns{
+    display: flex;
+    margin: 40px 0;
+}
+
+#reset{
+    margin-left: 10px;
+}
+#interaction-Container{
+    /* border: 2px solid purple; */
+    width: 35vw;
+    height: 95vh;
+    padding: 20px 0 0 15px;
+}
+
+#form{
+    display: flex;
+    margin: 20px 0;
+    font-size: 1rem;
+}
+
+#form input {
+    border-radius: 10px;
+    padding: 10px 5px;
+    border: none;
+    outline: 2px solid black;
+}
+
+#form label{
+    font-size: 1.3rem;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+#form input:focus{
+    outline: 2px solid rgb(133, 175, 239);
+}
+#col-block{
+  margin-left: 15px;
+}
+.label{
+    display: block;
+    margin-bottom: 5px;
+}
+
+header{
+    font-size: calc(4vw + 0.2rem);
+}
+
+#interaction-Container{
+
 }
