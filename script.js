@@ -10,42 +10,45 @@ const formFieldCont = document.createElement('div')
 const btnContainer = document.createElement('div')
 const header = document.createElement('header')
 const body = document.querySelector('body')
+let erase = false
 const rows = 16
 const cols = 16
 
-formFieldCont.id = 'form'
-interactionContainer.id = 'aside'
+app()
 
-header.textContent = 'Etch-a-Sketch'
 console.log(tileContainer.offsetWidth)
 
 // tileContainer.style.border = '2px solid green'
-tileContainer.setAttribute('id',"tile-container")
-interactionContainer.setAttribute('id', "interaction-Container")
-fillerDiv.style.width = '100px'
-rowDiv.style.display = "flex"
-rowDiv.style.height = '30px'
+
+
 
 function buildTile(){
-for (let i = 0; i < cols; i++){
-    fillerDiv.className = 'block'
-    rowDiv.appendChild(fillerDiv.cloneNode(true))
-}
-for (let i = 0; i < rows; i++){
-    const rowClone = rowDiv.cloneNode(true)
-    rowClone.className = `row${i}`
-    tileContainer.appendChild(rowClone)
-}
-}
+    tileContainer.setAttribute('id',"tile-container")
+    rowDiv.style.display = "flex"
+    rowDiv.style.height = '30px'
+    fillerDiv.style.width = '100px'
 
-
-tileContainer.addEventListener('mouseover', (e)=>{
-    if(e.target.classList.contains('block')){
-    e.target.style.backgroundColor = 'red'
+    for (let i = 0; i < cols; i++){
+        fillerDiv.className = 'block'
+        rowDiv.appendChild(fillerDiv.cloneNode(true))
     }
-})
+    for (let i = 0; i < rows; i++){
+        const rowClone = rowDiv.cloneNode(true)
+        rowClone.className = `row${i}`
+        tileContainer.appendChild(rowClone)
+    }
+   
+}
 
-
+function generateRandomHexCode(){
+    let hex = '#'
+    for(let i = 0; i < 6; i++){
+        const alphaNumeric = [1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
+        const component = alphaNumeric[Math.floor(Math.random() * alphaNumeric.length)]
+        hex += component
+    }
+    return hex
+}
 
 function constructForm(formContainer){
     const rowInput = document.createElement('input')
@@ -77,7 +80,6 @@ function constructBtns(btnsContainer){
     resetBtn.textContent = "RESET"
     clearBtn.textContent = "CLEAR"
     btnContainer.setAttribute("id", 'btns')
-
     resetBtn.setAttribute('id', "reset")
     clearBtn.setAttribute('id', "clear")
     resetBtn.setAttribute('class', "btn")
@@ -86,6 +88,8 @@ function constructBtns(btnsContainer){
 }
 
 function buildAsideBlock(){
+    interactionContainer.setAttribute('id', "interaction-Container")
+    header.textContent = 'Etch-a-Sketch'
     constructForm(formFieldCont)
     constructBtns(btnContainer)
     interactionContainer.append(header, formFieldCont, btnContainer)
@@ -96,6 +100,52 @@ function buildDom(parent, ...children){
         parent.append(child)
     }
 }
-buildTile()
-buildAsideBlock()
-buildDom(body, interactionContainer, tileContainer)
+
+
+// resetBtn.addEventListener('click', ()=>{
+//     console.log(body)
+//     buildTile()
+//     buildAsideBlock()
+//     buildDom(body, interactionContainer, tileContainer)
+// })
+
+function app(){
+    buildTile()
+    buildAsideBlock()
+    buildDom(body, interactionContainer, tileContainer)
+    eventListeners()
+}
+
+function eventListeners(){
+    const reset = document.querySelector('#reset')
+    reset.addEventListener('click', ()=>{
+        const blocks = document.querySelectorAll('.block')
+        blocks.forEach(block => 
+            block.style.backgroundColor = 'white'
+        )
+    })
+
+    //
+    const clear = document.querySelector('#clear')
+    clear.addEventListener("click", ()=>{
+        erase = true;
+    })
+
+    //
+    tileContainer.addEventListener('mouseover', (e)=>{
+        if(e.target.classList.contains('block')){
+            if(!erase){
+                e.target.style.backgroundColor = generateRandomHexCode()
+            }
+            else{
+                e.target.style.backgroundColor = "white"
+            }
+        console.log(e.target.style.backgroundColor)
+        }
+    })
+
+    //
+
+
+}
+
