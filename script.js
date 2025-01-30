@@ -1,42 +1,58 @@
 'use strict';
+
 //logic for the app is 
 //create row with 16 divs, then add each row to the container div 16 times
 
-const fillerDiv = document.createElement('div')
-const rowDiv = document.createElement('div')
+
 const tileContainer = document.createElement('div')
 const interactionContainer = document.createElement('div')
 const formFieldCont = document.createElement('div')
 const btnContainer = document.createElement('div')
 const header = document.createElement('header')
 const body = document.querySelector('body')
+const fillerDiv = document.createElement('div')
+const rowDiv = document.createElement('div')
+
+// const empty = DOMPurify.sanitize('')
 let erase = false
 let rows = 100
 let cols = 100
 
 app()
 
+  // console.log("box width", boxWidth)
+    // console.log("box Height", boxHeight)
+    // console.log("interaction height", interactionContainer.offsetHeight)
+    // console.log("interaction width", interactionContainer.offsetWidth)
+    
 function buildTile(){
+    rowDiv.textContent = ''
+    fillerDiv.textContent = ''
+    tileContainer.textContent = ''
+    console.log(rowDiv)
+    console.log(fillerDiv)
+
     tileContainer.setAttribute('id',"tile-container")
     let boxHeight = interactionContainer.offsetHeight / rows
     let boxWidth = interactionContainer.offsetWidth / cols
-    console.log("box width", boxWidth)
-    console.log("box Height", boxHeight)
-    console.log("interaction height", interactionContainer.offsetHeight)
-    console.log("interaction width", interactionContainer.offsetWidth)
+  
     rowDiv.style.display = "flex"
-    rowDiv.style.height = `${boxHeight}%`
-    fillerDiv.style.width = `${boxWidth}%`
+    rowDiv.style.height = `${boxHeight}px`
+    fillerDiv.style.width = `${boxWidth}px`
+
     for (let i = 0; i < cols; i++){
         fillerDiv.className = 'block'
         rowDiv.appendChild(fillerDiv.cloneNode(true))
     }
-    console.log("checked")
+
     for (let i = 0; i < rows; i++){
+
         const rowClone = rowDiv.cloneNode(true)
         rowClone.className = `row${i}`
+        console.log(rowClone)
         tileContainer.appendChild(rowClone)
     }
+    
 }
 
 function getUserInput(){
@@ -51,9 +67,6 @@ function getUserInput(){
                 cols = parseInt(colElement.value)
                 rowElement.value = ''
                 colElement.value = ''
-                tileContainer.textContent  = ""
-                buildTile()
-                
             }
             else{
                 alert("Please make your input with the range specified")
@@ -141,13 +154,15 @@ function app(){
     eventListeners()
 }
 
+
 function eventListeners(){
     const reset = document.querySelector('#reset')
     reset.addEventListener('click', ()=>{
-        const blocks = document.querySelectorAll('.block')
-        blocks.forEach(block => 
-            block.style.backgroundColor = 'white'
-        )
+        cols = 100
+        rows = 100
+        console.log("before", tileContainer.children)
+        tileContainer.textContent = ''
+        buildTile()
     })
 
     //
@@ -172,6 +187,7 @@ function eventListeners(){
     const showTile = document.querySelector('#enter')
     showTile.addEventListener("click", ()=>{
         getUserInput()
+        buildTile()
     })
 }
 
