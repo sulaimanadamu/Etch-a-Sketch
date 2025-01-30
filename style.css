@@ -10,18 +10,19 @@ body{
 }
 
 .block{
-    border: 2px solid rgb(245, 240, 240);
+    background-color: rgb(245, 240, 240);
+    border: 1px solid white;
 }
 
 #aside{
-    border: 2px solid red;
     padding: 40px 18px;
 }
 
 #tile-container{
+    border: 2px solid purple;
     padding: 10px 10px 0 0;
     width:65vw;
-    height: 95vh
+    height: 99dvh
 }
 .btn:hover{
     border: 2px solid rgb(133, 175, 239);
@@ -40,11 +41,11 @@ body{
     margin: 40px 0;
 }
 
-#reset{
+#reset, #enter{
     margin-left: 10px;
 }
+
 #interaction-Container{
-    /* border: 2px solid purple; */
     width: 35vw;
     height: 95vh;
     padding: 20px 0 0 15px;
@@ -61,7 +62,9 @@ body{
     padding: 10px 0px 10px 5px;
     border: none;
     outline: 2px solid black;
+    width: 90%;
 }
+
 
 #form label{
     font-size: 1.3rem;
@@ -73,6 +76,11 @@ body{
 #col-block{
   margin-left: 15px;
 }
+#col-block, #row-block{
+    display: flex;
+    flex-direction: column;
+}
+
 .label{
     display: block;
     margin-bottom: 5px;
@@ -82,6 +90,46 @@ header{
     font-size: calc(4vw + 0.2rem);
 }
 
-#interaction-Container{
+@media screen and (max-width:1000px){
+    body{
+        flex-direction: column;
+    }
+    #interaction-Container{
+        text-align: center;
+        width: 100%;
+        border: 2px solid red;
+        height: 35vh;
+    }
+    #form{
+        justify-content: center;
+    }
+    #btns{
+        justify-content: center;
+    }
+    #col-block *, #row-block *{
+        text-align: left;
+        justify-self: start;
+    }
 
+    header{
+        font-size: calc(5vw + 1rem);
+    }
+    #col-block label, #row-block label{
+        font-size: 1.02rem;
+    }
+    #form{
+        margin: 15px 0 0 0;
+    }
+    
+    #btns{
+        margin: 15px 0;
+    }
+    .btn{
+        padding: 10px 15px;
+    }
+    
+    #tile-container{
+        width: 100dvw;
+        height:  65dvh;
+    }
 }

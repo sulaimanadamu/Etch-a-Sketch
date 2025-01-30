@@ -11,34 +11,59 @@ const btnContainer = document.createElement('div')
 const header = document.createElement('header')
 const body = document.querySelector('body')
 let erase = false
-const rows = 16
-const cols = 16
+let rows = 100
+let cols = 100
 
 app()
 
-console.log(tileContainer.offsetWidth)
-
-// tileContainer.style.border = '2px solid green'
-
-
-
 function buildTile(){
     tileContainer.setAttribute('id',"tile-container")
+    let boxHeight = interactionContainer.offsetHeight / rows
+    let boxWidth = interactionContainer.offsetWidth / cols
+    console.log("box width", boxWidth)
+    console.log("box Height", boxHeight)
+    console.log("interaction height", interactionContainer.offsetHeight)
+    console.log("interaction width", interactionContainer.offsetWidth)
     rowDiv.style.display = "flex"
-    rowDiv.style.height = '30px'
-    fillerDiv.style.width = '100px'
-
+    rowDiv.style.height = `${boxHeight}%`
+    fillerDiv.style.width = `${boxWidth}%`
     for (let i = 0; i < cols; i++){
         fillerDiv.className = 'block'
         rowDiv.appendChild(fillerDiv.cloneNode(true))
     }
+    console.log("checked")
     for (let i = 0; i < rows; i++){
         const rowClone = rowDiv.cloneNode(true)
         rowClone.className = `row${i}`
         tileContainer.appendChild(rowClone)
     }
-   
 }
+
+function getUserInput(){
+        const rowElement = document.querySelector('#row-input')
+        const colElement = document.querySelector('#col-input')
+        const rowValue = parseInt(rowElement.value)
+        const colValue = parseInt(colElement.value)
+       
+        if(colElement.value && rowElement.value){
+            if((colValue <= 100 && colValue > 0) && (rowValue <= 100 && rowValue > 0)){
+                rows = parseInt(colElement.value)
+                cols = parseInt(colElement.value)
+                rowElement.value = ''
+                colElement.value = ''
+                tileContainer.textContent  = ""
+                buildTile()
+                
+            }
+            else{
+                alert("Please make your input with the range specified")
+            }
+        }
+        else{
+                alert("Please fill the number of tiles for rows and columns!")
+        }
+    }
+
 
 function generateRandomHexCode(){
     let hex = '#'
@@ -69,6 +94,7 @@ function constructForm(formContainer){
     rowLabel.setAttribute('for', 'row-input')
     colInput.setAttribute('id', "col-input")
     colLabel.setAttribute('for', 'col-input')
+    formContainer.setAttribute("id", 'form')
     rowInputBlock.append(rowLabel, rowInput)
     colInputBlock.append(colLabel, colInput)
     formContainer.append(rowInputBlock, colInputBlock)
@@ -77,14 +103,20 @@ function constructForm(formContainer){
 function constructBtns(btnsContainer){
     const resetBtn = document.createElement('button')
     const clearBtn = document.createElement('button')
+    const enter = document.createElement('button')
+    
+    enter.textContent = "Show Tile"
     resetBtn.textContent = "RESET"
     clearBtn.textContent = "CLEAR"
+
     btnContainer.setAttribute("id", 'btns')
     resetBtn.setAttribute('id', "reset")
     clearBtn.setAttribute('id', "clear")
     resetBtn.setAttribute('class', "btn")
     clearBtn.setAttribute('class', "btn")
-    btnsContainer.append(clearBtn, resetBtn)
+    enter.setAttribute('class', "btn")
+    enter.setAttribute('id', "enter")
+    btnsContainer.append(clearBtn, resetBtn, enter)
 }
 
 function buildAsideBlock(){
@@ -101,18 +133,11 @@ function buildDom(parent, ...children){
     }
 }
 
-
-// resetBtn.addEventListener('click', ()=>{
-//     console.log(body)
-//     buildTile()
-//     buildAsideBlock()
-//     buildDom(body, interactionContainer, tileContainer)
-// })
-
 function app(){
-    buildTile()
+    body.textContent = ''
     buildAsideBlock()
     buildDom(body, interactionContainer, tileContainer)
+    buildTile()
     eventListeners()
 }
 
@@ -140,12 +165,13 @@ function eventListeners(){
             else{
                 e.target.style.backgroundColor = "white"
             }
-        console.log(e.target.style.backgroundColor)
         }
     })
 
     //
-
-
+    const showTile = document.querySelector('#enter')
+    showTile.addEventListener("click", ()=>{
+        getUserInput()
+    })
 }
 
