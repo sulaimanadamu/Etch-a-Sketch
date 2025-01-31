@@ -20,7 +20,6 @@ body{
 }
 
 #tile-container{
-    border: 2px solid purple;
     margin: 10px 10px 10px 0;
     width:65vw;
     height: 99dvh
@@ -101,7 +100,6 @@ header{
     #interaction-Container{
         text-align: center;
         width: 100%;
-        border: 2px solid red;
         height: 35vh;
     }
     #form{

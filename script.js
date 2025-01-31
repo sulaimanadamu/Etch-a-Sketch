@@ -137,7 +137,6 @@ function buildDom(parent, ...children){
 function app(){
     body.textContent = ''
     buildAsideBlock()
-    console.log(tileContainer.offsetHeight)
     buildDom(body, interactionContainer, tileContainer)
     // build tile depends on tile container being positioned first in the dom
     buildTile()
@@ -170,7 +169,6 @@ function eventListeners(){
         if(e.target.classList.contains('block')){
             if(!erase){
                 e.target.style.backgroundColor = generateRandomHexCode()
-                console.log("clean")
             }
             else{
                 e.target.style.backgroundColor = "rgb(245, 240, 240)"
