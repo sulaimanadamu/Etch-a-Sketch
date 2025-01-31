@@ -3,7 +3,6 @@
 //logic for the app is 
 //create row with 16 divs, then add each row to the container div 16 times
 
-
 const tileContainer = document.createElement('div')
 const interactionContainer = document.createElement('div')
 const formFieldCont = document.createElement('div')
@@ -12,47 +11,36 @@ const header = document.createElement('header')
 const body = document.querySelector('body')
 const fillerDiv = document.createElement('div')
 const rowDiv = document.createElement('div')
+let boxHeight = 0
+let boxWidth = 0
+const paddingPlusMargin = 24
 
-// const empty = DOMPurify.sanitize('')
 let erase = false
-let rows = 100
-let cols = 100
+let rows = 50
+let cols = 50
 
 app()
 
-  // console.log("box width", boxWidth)
-    // console.log("box Height", boxHeight)
-    // console.log("interaction height", interactionContainer.offsetHeight)
-    // console.log("interaction width", interactionContainer.offsetWidth)
-    
 function buildTile(){
     rowDiv.textContent = ''
-    fillerDiv.textContent = ''
     tileContainer.textContent = ''
-    console.log(rowDiv)
-    console.log(fillerDiv)
-
     tileContainer.setAttribute('id',"tile-container")
-    let boxHeight = interactionContainer.offsetHeight / rows
-    let boxWidth = interactionContainer.offsetWidth / cols
-  
-    rowDiv.style.display = "flex"
-    rowDiv.style.height = `${boxHeight}px`
-    fillerDiv.style.width = `${boxWidth}px`
-
+    boxHeight = (tileContainer.offsetHeight - paddingPlusMargin) / rows
+    boxWidth = (tileContainer.offsetWidth - paddingPlusMargin) / cols
+   
     for (let i = 0; i < cols; i++){
+        fillerDiv.style.width = `${boxWidth}px`
+        fillerDiv.style.height = `${boxHeight}px`
         fillerDiv.className = 'block'
+        fillerDiv.id = `id-${i}`
         rowDiv.appendChild(fillerDiv.cloneNode(true))
     }
 
-    for (let i = 0; i < rows; i++){
-
+    for (let i = 0; i < rows; i++){        
         const rowClone = rowDiv.cloneNode(true)
-        rowClone.className = `row${i}`
-        console.log(rowClone)
+        rowClone.className = `row ${i}`
         tileContainer.appendChild(rowClone)
     }
-    
 }
 
 function getUserInput(){
@@ -62,7 +50,7 @@ function getUserInput(){
         const colValue = parseInt(colElement.value)
        
         if(colElement.value && rowElement.value){
-            if((colValue <= 100 && colValue > 0) && (rowValue <= 100 && rowValue > 0)){
+            if((colValue <= 50 && colValue > 0) && (rowValue <= 50 && rowValue > 0)){
                 rows = parseInt(colElement.value)
                 cols = parseInt(colElement.value)
                 rowElement.value = ''
@@ -97,8 +85,8 @@ function constructForm(formContainer){
     const colInputBlock = document.createElement('div')
     rowLabel.className = "label"
     colLabel.className = "label"
-    rowInput.placeholder = 'Maximum of 100'
-    colInput.placeholder = 'Maximum of 100'
+    rowInput.placeholder = 'Maximum of 50'
+    colInput.placeholder = 'Maximum of 50'
     rowInputBlock.id = 'row-block'
     colInputBlock.id = 'col-block'
     rowLabel.textContent = "Box per row"
@@ -149,20 +137,26 @@ function buildDom(parent, ...children){
 function app(){
     body.textContent = ''
     buildAsideBlock()
+    console.log(tileContainer.offsetHeight)
     buildDom(body, interactionContainer, tileContainer)
+    // build tile depends on tile container being positioned first in the dom
     buildTile()
     eventListeners()
 }
+
+window.addEventListener('resize', function() {
+    buildTile()
+ })
 
 
 function eventListeners(){
     const reset = document.querySelector('#reset')
     reset.addEventListener('click', ()=>{
-        cols = 100
-        rows = 100
-        console.log("before", tileContainer.children)
-        tileContainer.textContent = ''
+        cols = 50
+        rows = 50
+        erase = false
         buildTile()
+        console.log("Reset" )
     })
 
     //
@@ -176,9 +170,10 @@ function eventListeners(){
         if(e.target.classList.contains('block')){
             if(!erase){
                 e.target.style.backgroundColor = generateRandomHexCode()
+                console.log("clean")
             }
             else{
-                e.target.style.backgroundColor = "white"
+                e.target.style.backgroundColor = "rgb(245, 240, 240)"
             }
         }
     })

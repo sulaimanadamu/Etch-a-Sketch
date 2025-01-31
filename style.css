@@ -7,6 +7,7 @@
 body{
     display: flex;
     align-items: center;
+    height: 100vh;
 }
 
 .block{
@@ -19,10 +20,13 @@ body{
 }
 
 #tile-container{
-    /* border: 2px solid purple; */
-    padding: 10px 10px 0 0;
+    border: 2px solid purple;
+    margin: 10px 10px 10px 0;
     width:65vw;
     height: 99dvh
+}
+.row{
+    display: flex;
 }
 .btn:hover{
     border: 2px solid rgb(133, 175, 239);
@@ -118,14 +122,14 @@ header{
         font-size: 1.02rem;
     }
     #form{
-        margin: 15px 0 0 0;
+        margin: 10px 0 0 0;
     }
     
     #btns{
         margin: 15px 0;
     }
     .btn{
-        padding: 10px 15px;
+        padding: 8px 15px;
     }
     
     #tile-container{
