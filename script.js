@@ -176,6 +176,17 @@ function eventListeners(){
         }
     })
 
+    tileContainer.addEventListener('touchmove', (e)=>{
+        if(e.target.classList.contains('block')){
+            if(!erase){
+                e.touches[0].target.style.backgroundColor = generateRandomHexCode()
+            }
+            else{
+                e.touches[0].target.style.backgroundColor = "rgb(245, 240, 240)"
+            }
+        }
+    })
+
     //
     const showTile = document.querySelector('#enter')
     showTile.addEventListener("click", ()=>{
