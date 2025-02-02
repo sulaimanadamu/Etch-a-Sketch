@@ -176,19 +176,6 @@ function eventListeners(){
         }
     })
 
-    // tileContainer.addEventListener('touchmove', (e)=>{
-    //     let ele = [...e.changedTouches]
-    //     ele.forEach((i)=> console.log(i))
-    //     if(e.target.classList.contains('block')){
-    //         if(!erase){
-    //             e.touches[0].target.style.backgroundColor = generateRandomHexCode()
-    //         }
-    //         else{
-    //             e.touches[0].target.style.backgroundColor = "rgb(245, 240, 240)"
-    //         }
-    //     }
-    // })
-
 
     const handleTouch = (event) => {
         event.preventDefault();
@@ -199,8 +186,6 @@ function eventListeners(){
           event.touches[0].clientY
         );
     
-        // console.log(touchedElement)
-        // Check if the touched element is a grid item
         if (touchedElement && touchedElement.classList.contains('block') && erase) {
           touchedElement.style.backgroundColor = "rgb(245, 240, 240)"; // Change to your desired color
         }
