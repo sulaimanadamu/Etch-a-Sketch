@@ -161,7 +161,11 @@ function eventListeners(){
     //
     const clear = document.querySelector('#clear')
     clear.addEventListener("click", ()=>{
-        erase = true;
+        if(erase){
+        erase = false;
+    }else{
+            erase = true;
+        }
     })
 
     //
